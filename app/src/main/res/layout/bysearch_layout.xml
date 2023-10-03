@@ -7,7 +7,7 @@
     android:paddingRight="20dp">
 
     <EditText
-        android:id="@+id/bysearch_edittext"
+        android:id="@+id/by_search_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

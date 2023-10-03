@@ -3,6 +3,7 @@ package com.technipixl.prepaevalfinaland.network.service
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.technipixl.prepaevalfinaland.network.model.CategoryResponse
 import com.technipixl.prepaevalfinaland.network.model.CocktailResponse
 import retrofit2.Response
 import retrofit2.create
@@ -17,4 +18,10 @@ class CocktailServiceImpl: BaseServiceImpl() {
 
     suspend fun searchByAlcool(alcool: String): Response<CocktailResponse> =
         getRetrofit().create(CocktailService::class.java).searchByAlcool(alcool)
+
+    suspend fun getCategoryList(): Response<CategoryResponse> =
+        getRetrofit().create(CocktailService::class.java).getCategoriesList()
+
+    suspend fun searchByCategory(category: String): Response<CocktailResponse> =
+        getRetrofit().create(CocktailService::class.java).searchByCategory(category)
 }

@@ -17,10 +17,13 @@ import com.technipixl.prepaevalfinaland.R
 import com.technipixl.prepaevalfinaland.databinding.BysearchLayoutBinding
 import com.technipixl.prepaevalfinaland.databinding.CocktailItemLayoutBinding
 import com.technipixl.prepaevalfinaland.databinding.FragmentSearchBinding
+import com.technipixl.prepaevalfinaland.db.database.DatabaseRepository
+import com.technipixl.prepaevalfinaland.db.model.CategoryEntity
 import com.technipixl.prepaevalfinaland.network.model.CocktailResponse
 import com.technipixl.prepaevalfinaland.network.service.CocktailServiceImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -30,6 +33,8 @@ class SearchFragment : Fragment() {
     private var adapter: SearchAdapter? = null
     private val randomCocktailService by lazy { CocktailServiceImpl() }
     var selectedSearchByAlcool: String? = null
+    var categoryList: List<CategoryEntity>? = null
+    var selectedCategory: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +49,16 @@ class SearchFragment : Fragment() {
         binding.searchByAlcool.setOnClickListener {
             showAlertDialogByAlcool()
         }
+
+        CoroutineScope(IO).launch {
+            categoryList = DatabaseRepository.getCategory(requireContext())
+        }
+
+        binding.searchByCategories.setOnClickListener {
+            showAlertDialogByCategory()
+        }
+
+
 
         return binding.root
     }
@@ -70,8 +85,28 @@ class SearchFragment : Fragment() {
         }
     }
 
+    private fun retrieveDataByCategory(category: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = randomCocktailService.searchByCategory(category)
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body().let { body ->
+                            if (body != null) {
+                                setupRecyclerView(body)
+                            }
+                        }
+                    }
+                } catch (e: HttpException) {
+                    print(e)
+                } catch (e: Throwable) {
+                    print(e)
+                }
+            }
+        }
+    }
+
     private fun showAlertDialogBySearch() {
-    val viewBinding: BysearchLayoutBinding = BysearchLayoutBinding.inflate(layoutInflater)
         // Create an alert builder
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Search")
@@ -82,8 +117,8 @@ class SearchFragment : Fragment() {
 
         // add a button
         builder.setPositiveButton("OK") { dialog: DialogInterface?, which: Int ->
-            val editText = viewBinding.bysearchEdittext.text.toString()
-            editText?.let { retrieveDataBySearch(it) }
+            val editText = customLayout.findViewById<EditText>(R.id.by_search_edit_text).text.toString()
+             retrieveDataBySearch(editText)
         }
 
         // create and show the alert dialog
@@ -91,6 +126,18 @@ class SearchFragment : Fragment() {
         dialog.show()
     }
 
+    private fun showAlertDialogByCategory() {
+
+        val array = categoryList?.map { it.name }?.toTypedArray()
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Choose a category")
+            .setItems(array) { dialog, which ->
+                selectedCategory = array?.get(which)
+
+                retrieveDataByCategory(selectedCategory!!)
+            }
+        builder.create().show()
+    }
 
     private fun showAlertDialogByAlcool() {
         val array = listOf("Alcoholic", "Non_Alcoholic").toTypedArray()

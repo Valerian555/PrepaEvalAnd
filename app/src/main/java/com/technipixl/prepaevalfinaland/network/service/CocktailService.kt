@@ -1,5 +1,6 @@
 package com.technipixl.prepaevalfinaland.network.service
 
+import com.technipixl.prepaevalfinaland.network.model.CategoryResponse
 import com.technipixl.prepaevalfinaland.network.model.CocktailResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -16,4 +17,11 @@ interface CocktailService {
     @GET("filter.php")
     suspend fun searchByAlcool(
         @Query("a") alcool: String): Response<CocktailResponse>
+
+    @GET("list.php?c=list")
+    suspend fun getCategoriesList(): Response<CategoryResponse>
+
+    @GET("filter.php")
+    suspend fun searchByCategory(
+        @Query("c") category: String): Response<CocktailResponse>
 }
