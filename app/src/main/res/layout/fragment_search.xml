@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.search.SearchFragment"
+    >
+
+    <Button
+        android:id="@+id/search_by_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chercher par nom"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/search_by_alcool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chercher avec la contenance en alcool"
+        app:layout_constraintTop_toBottomOf="@id/search_by_name"/>
+
+    <Button
+        android:id="@+id/search_by_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chercher par catégorie"
+        app:layout_constraintTop_toBottomOf="@id/search_by_alcool"/>
+
+    <Button
+        android:id="@+id/search_by_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chercher par ingrédients"
+        app:layout_constraintTop_toBottomOf="@id/search_by_categories"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cocktail_recylerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/search_by_ingredients"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

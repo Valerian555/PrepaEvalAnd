@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/fragment_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Random Cocktail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/cocktail_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_title"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:id="@+id/cocktail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/cocktail_image"
+        android:text="test cocktail"
+        app:layout_constraintStart_toStartOf="@id/cocktail_image"
+        app:layout_constraintEnd_toEndOf="@id/cocktail_image"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/cocktail_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Shot"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/cocktail_name"
+        app:layout_constraintStart_toStartOf="@id/cocktail_name"
+        app:layout_constraintEnd_toEndOf="@id/cocktail_name" />
+
+    <Button
+        android:id="@+id/random_cocktail_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/cocktail_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Random Cocktail"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
